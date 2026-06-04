@@ -1,0 +1,128 @@
+/* ─── Reader Experience Styles ─── */
+
+.reader-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 760px) 260px;
+  justify-content: center;
+  gap: var(--space-6);
+  align-items: start;
+  padding-block: var(--space-8);
+}
+.reader-article {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  padding: clamp(var(--space-6), 5vw, var(--space-12));
+  font-family: var(--font-reading);
+  color: var(--fg);
+  transition: background var(--motion-base) var(--ease-standard), color var(--motion-base) var(--ease-standard);
+}
+.reader-article[data-size="large"] { font-size: 1.35rem; line-height: 1.7; }
+.reader-article[data-size="base"] { font-size: 1.125rem; line-height: 1.65; }
+.reader-article[data-size="small"] { font-size: 0.95rem; line-height: 1.6; }
+.reader-article h1, .reader-article h2, .reader-article h3 {
+  font-family: var(--font-reading);
+  font-weight: 700;
+  margin-bottom: var(--space-4);
+}
+.reader-article p + p { margin-top: var(--space-5); }
+.reader-article .chapter-title {
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border);
+}
+.reader-article .chapter-title .lead { font-family: var(--font-body); }
+.reader-article .eyebrow { font-family: var(--font-mono); }
+
+.reader-rail { position: sticky; top: 88px; display: grid; gap: var(--space-4); }
+
+/* ─── Responsive Breakpoints ─── */
+
+@media (max-width: 560px) {
+  .filters-dialog {
+    width: 100%;
+    margin: 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .filters-dialog-body { max-height: min(72vh, 760px); }
+}
+
+@media (max-width: 1180px) {
+  .reader-layout { grid-template-columns: minmax(0, 760px) 240px; }
+  .reader-layout .reader-rail:first-child { display: none; }
+  .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 920px) {
+  .mobile-nav-toggle { display: inline-flex; }
+  .app-sidebar {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    z-index: 40;
+    background: var(--surface);
+    transform: translateX(-100%);
+    transition: transform var(--motion-base) var(--ease-standard);
+    overflow-y: auto;
+  }
+  .app-sidebar.is-open {
+    transform: translateX(0);
+    box-shadow: var(--elev-raised);
+  }
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: color-mix(in oklab, var(--fg), transparent 60%);
+    z-index: 30;
+    opacity: 0;
+    transition: opacity var(--motion-base) var(--ease-standard);
+  }
+  .sidebar-overlay.is-open { display: block; opacity: 1; }
+  .container { padding-inline: var(--container-gutter-tablet); }
+  .topnav-inner { align-items: stretch; flex-direction: column; padding-block: var(--space-3); }
+  .navlinks { width: 100%; }
+  .nav-cta { display: none; }
+  .hero-split, .grid-2, .grid-3, .grid-main, .workspace, .dashboard-layout { grid-template-columns: 1fr; }
+  .sidebar, .app-sidebar { border-right: 0; border-bottom: 1px solid var(--border); }
+  .side-link { min-height: 44px; }
+  .reader-layout { grid-template-columns: 1fr; padding-inline: var(--container-gutter-tablet); }
+  .reader-rail { position: static; }
+  .reader-controls { position: sticky; top: calc(64px + var(--space-3)); z-index: 15; }
+}
+
+@media (max-width: 600px) {
+  .grid-4 { grid-template-columns: 1fr; }
+  .tabs {
+    padding-bottom: var(--space-2);
+    scroll-padding-inline: var(--container-gutter-phone);
+    margin-inline: calc(var(--container-gutter-phone) * -1);
+    padding-inline: var(--container-gutter-phone);
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .container { padding-inline: var(--container-gutter-phone); }
+  .section { padding-block: var(--section-y-phone); }
+  .row-between { align-items: start; flex-direction: column; }
+  .grid-4 { grid-template-columns: 1fr; }
+  .workspace-main, .app-main { padding: var(--space-4); }
+  .panel-head, .chapter-item, .story-row { grid-template-columns: 1fr; align-items: start; }
+  .recommended-reads .chapter-item { grid-template-columns: 40px minmax(0, 1fr); }
+  .shelf { grid-auto-columns: minmax(160px, 76vw); }
+}

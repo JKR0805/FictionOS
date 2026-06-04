@@ -1,0 +1,77 @@
+/* ─── Theme Overrides ─── */
+
+/* Auto dark via system preference */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="sepia"]):not([data-theme="midnight"]) {
+    --bg: #0b0d10;
+    --surface: #13161b;
+    --surface-warm: var(--surface);
+    --fg: #f3f4f6;
+    --fg-2: #e5e7eb;
+    --muted: #9ca3af;
+    --meta: var(--muted);
+    --border: #272b33;
+    --border-soft: #1f2229;
+    --accent: #ffffff;
+    --accent-on: #0b0d10;
+    --accent-hover: color-mix(in oklab, var(--accent), black 15%);
+    --accent-active: color-mix(in oklab, var(--accent), black 25%);
+    --elev-raised:
+      0 1px 2px 0 rgba(0, 0, 0, 0.6),
+      0 2px 8px 0 rgba(0, 0, 0, 0.4);
+    --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+  }
+}
+
+/* Explicit dark */
+[data-theme="dark"] {
+  --bg: #0b0d10;
+  --surface: #13161b;
+  --surface-warm: var(--surface);
+  --fg: #f3f4f6;
+  --fg-2: #e5e7eb;
+  --muted: #9ca3af;
+  --meta: var(--muted);
+  --border: #272b33;
+  --border-soft: #1f2229;
+  --accent: #ffffff;
+  --accent-on: #0b0d10;
+  --accent-hover: color-mix(in oklab, var(--accent), black 15%);
+  --accent-active: color-mix(in oklab, var(--accent), black 25%);
+  --elev-raised:
+    0 1px 2px 0 rgba(0, 0, 0, 0.6),
+    0 2px 8px 0 rgba(0, 0, 0, 0.4);
+  --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+}
+
+/* Sepia */
+[data-theme="sepia"] {
+  --bg: #f4ecd8;
+  --surface: #fbf5e6;
+  --fg: #433422;
+  --fg-2: #5c4b37;
+  --muted: #857158;
+  --border: #e0d0b6;
+  --accent: #783e19;
+  --accent-on: #ffffff;
+  --accent-hover: color-mix(in oklab, var(--accent), white 15%);
+  --elev-raised:
+    0 1px 2px 0 rgba(67, 52, 34, 0.1),
+    0 2px 8px 0 rgba(67, 52, 34, 0.05);
+}
+
+/* Midnight */
+[data-theme="midnight"] {
+  --bg: #050d18;
+  --surface: #0a1626;
+  --fg: #c5d0de;
+  --fg-2: #a2b0c2;
+  --muted: #63768d;
+  --border: #16263b;
+  --accent: #7ca5d6;
+  --accent-on: #050d18;
+  --accent-hover: color-mix(in oklab, var(--accent), white 15%);
+  --elev-raised:
+    0 1px 2px 0 rgba(0, 0, 0, 0.4),
+    0 2px 8px 0 rgba(0, 0, 0, 0.3);
+}
