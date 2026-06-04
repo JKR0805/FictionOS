@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { auth } from '@/lib/firebase'
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || '/api',
@@ -8,7 +9,6 @@ export const api = axios.create({
 // Attach Firebase token to every request
 api.interceptors.request.use(async (config) => {
   try {
-    const { auth } = await import('@/lib/firebase')
     const user = auth.currentUser
     if (user) {
       const token = await user.getIdToken()
