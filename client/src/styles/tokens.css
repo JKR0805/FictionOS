@@ -1,28 +1,41 @@
-/* ─── FictionOS Design Tokens ─── */
+/* ─── FictionOS Design Tokens (Narrative Systems) ─── */
 :root {
-  /* Colors — Light */
-  --bg: #ffffff;
-  --surface: #ffffff;
-  --surface-warm: var(--surface);
-  --fg: #111827;
-  --fg-2: var(--fg);
-  --muted: #64748b;
+  /* Narrative Systems Palette */
+  --obsidian: #050816;
+  --ink: #070B1D;
+  --abyss: #0B1023;
+  --amber-glow: #F6B94A;
+  --indigo-pulse: #5B6EFF;
+  --ethereal-violet: #A56EFF;
+
+  /* Colors — Dark Cinematic */
+  --bg: var(--obsidian);
+  --surface: var(--ink);
+  --surface-warm: color-mix(in oklab, var(--ink), transparent 50%);
+  --fg: #e2e8f0; /* Soft white/grey for body */
+  --fg-2: #ffffff; /* Crisp white for headings */
+  --muted: #94a3b8;
   --meta: var(--muted);
-  --border: #e5e7eb;
-  --border-soft: var(--border);
-  --accent: #0f172a;
-  --accent-on: #ffffff;
+  --border: rgba(255, 255, 255, 0.05);
+  --border-soft: rgba(255, 255, 255, 0.1);
+  --accent: var(--amber-glow);
+  --accent-on: #000000;
   --accent-hover: color-mix(in oklab, var(--accent), white 15%);
   --accent-active: color-mix(in oklab, var(--accent), white 25%);
-  --success: #16a34a;
-  --warn: #d97706;
-  --danger: #dc2626;
+  --success: #10b981;
+  --warn: #f59e0b;
+  --danger: #ef4444;
+
+  /* Narrative specific */
+  --glow-indigo: rgba(93, 63, 211, 0.3);
+  --glow-amber: rgba(255, 198, 92, 0.3);
+  --glow-violet: rgba(177, 156, 217, 0.3);
 
   /* Typography */
-  --font-display: "Geist", "Geist Sans", -apple-system, system-ui, "Segoe UI", Arial, sans-serif;
-  --font-body: "Geist", "Geist Sans", -apple-system, system-ui, "Segoe UI", Arial, sans-serif;
-  --font-mono: "Fira Code", ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Monaco, Consolas, monospace;
-  --font-reading: "Literata", "Source Serif 4", "Merriweather", "Georgia", serif;
+  --font-display: "Playfair Display", serif;
+  --font-body: "Inter", "Geist", -apple-system, system-ui, sans-serif;
+  --font-mono: "Fira Code", ui-monospace, "SF Mono", monospace;
+  --font-reading: "Playfair Display", serif;
 
   /* Font Sizes */
   --text-xs: 12px;
@@ -33,45 +46,45 @@
   --text-2xl: 32px;
   --text-3xl: 40px;
   --text-4xl: 48px;
-  --leading-body: 1.5;
+  --leading-body: 1.6;
   --leading-tight: 1.2;
   --tracking-display: -0.02em;
 
   /* Spacing */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-12: 48px;
-  --section-y-desktop: 32px;
-  --section-y-tablet: 24px;
-  --section-y-phone: 16px;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --space-8: 64px;
+  --space-12: 96px;
+  --section-y-desktop: 120px;
+  --section-y-tablet: 80px;
+  --section-y-phone: 60px;
 
   /* Radii */
   --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
   --radius-pill: 9999px;
 
-  /* Elevation */
+  /* Elevation & Glows */
   --elev-flat: none;
   --elev-ring: 0 0 0 1px var(--border);
-  --elev-raised:
-    0 1px 2px 0 color-mix(in oklab, var(--fg), transparent 92%),
-    0 1px 3px 0 color-mix(in oklab, var(--fg), transparent 88%);
+  --elev-raised: 0 4px 20px rgba(0, 0, 0, 0.5);
   --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+  --shadow-glow: 0 0 15px var(--glow-indigo);
+  --shadow-glow-accent: 0 0 20px var(--glow-amber);
 
   /* Motion */
   --motion-fast: 150ms;
-  --motion-base: 200ms;
+  --motion-base: 300ms;
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
 
   /* Layout */
-  --container-max: 1280px;
-  --container-gutter-desktop: 24px;
-  --container-gutter-tablet: 16px;
+  --container-max: 1440px;
+  --container-gutter-desktop: 32px;
+  --container-gutter-tablet: 24px;
   --container-gutter-phone: 16px;
 }

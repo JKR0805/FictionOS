@@ -1,23 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* Narrative Systems Palette - Pure Stitch Reference */
+  --obsidian: #050816;
+  --ink: #070B1D;
+  --abyss: #0B1023;
+  
+  --amber-glow: #F6B94A;
+  --indigo-pulse: #5B6EFF;
+  --ethereal-violet: #A56EFF;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  /* Global Theme */
+  --bg: var(--obsidian);
+  --bg-secondary: var(--ink);
+  --bg-tertiary: var(--abyss); /* For glassmorphism bases */
+  
+  --text: #C5C6C7; /* Soft grey for body */
+  --text-h: #FFFFFF; /* Crisp white for headings */
+  --text-muted: #8A8D91;
+  
+  --border: rgba(255, 255, 255, 0.05);
+  --border-soft: rgba(255, 255, 255, 0.1);
+  --border-glow: rgba(91, 110, 255, 0.3); /* Indigo subtle glow */
+  
+  --accent: var(--amber-glow);
+  --accent-bg: rgba(246, 185, 74, 0.1);
+  --accent-secondary: var(--ethereal-violet);
+  --accent-secondary-bg: rgba(165, 110, 255, 0.1);
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
+  /* Shadows & Glows */
+  --shadow: 0 4px 40px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 15px var(--border-glow);
+  --shadow-glow-accent: 0 0 20px rgba(246, 185, 74, 0.2);
+
+  /* Typography */
+  --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --serif: 'Playfair Display', serif;
+  --heading: var(--serif);
+  --mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+
+  font: 16px/1.6 var(--sans);
+  letter-spacing: 0.01em;
+  color-scheme: dark;
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
@@ -26,86 +50,136 @@
   -moz-osx-font-smoothing: grayscale;
 
   @media (max-width: 1024px) {
-    font-size: 16px;
+    font-size: 15px;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+/* Light mode override if needed, but the design is inherently dark */
+@media (prefers-color-scheme: light) {
+  /* Keeping it dark as per "FictionOS: The Operating System for Stories" aesthetic.
+     We can force dark mode or provide a toggle later if requested. */
 }
 
 body {
   margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 1440px; /* Wider for cinematic dashboards */
   margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  position: relative;
+  overflow-x: hidden; /* Prevent horizontal scroll from glowing elements */
 }
 
-h1,
-h2 {
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--heading);
   font-weight: 500;
   color: var(--text-h);
+  line-height: 1.2;
 }
 
 h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
+  font-size: 4rem;
+  letter-spacing: -0.02em;
+  margin: 2rem 0;
   @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+    font-size: 2.5rem;
   }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
 }
 
-code,
-.counter {
+h2 {
+  font-size: 2.5rem;
+  margin: 0 0 1rem;
+  @media (max-width: 1024px) {
+    font-size: 1.75rem;
+  }
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+code, .counter {
   font-family: var(--mono);
   display: inline-flex;
   border-radius: 4px;
-  color: var(--text-h);
+  color: var(--ethereal-violet);
 }
 
 code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+  font-size: 0.9em;
+  padding: 0.2em 0.4em;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+}
+
+/* --- Narrative Systems Utility Classes --- */
+
+/* Glassmorphism Panels */
+.glass-panel {
+  background: rgba(31, 40, 51, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+/* Glowing Elements */
+.glow-border {
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.02), var(--shadow-glow);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.glow-border:hover {
+  border-color: rgba(93, 63, 211, 0.5);
+  box-shadow: 0 0 0 1px rgba(93, 63, 211, 0.3), var(--shadow-glow-accent);
+}
+
+.glow-text-amber {
+  color: var(--amber-glow);
+  text-shadow: 0 0 10px rgba(255, 198, 92, 0.4);
+}
+
+.glow-text-indigo {
+  color: var(--indigo-pulse);
+  text-shadow: 0 0 10px rgba(93, 63, 211, 0.4);
+}
+
+/* Interactive Elements */
+.interactive-node {
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.interactive-node:hover {
+  transform: scale(1.05);
+}
+
+/* SVG Pathways */
+.narrative-path {
+  fill: none;
+  stroke: url(#path-gradient);
+  stroke-width: 2;
+  opacity: 0.6;
+  transition: opacity 0.3s ease, stroke-width 0.3s ease;
+}
+
+.narrative-path:hover {
+  opacity: 1;
+  stroke-width: 3;
+}
+
+/* Background Gradients */
+.bg-gradient-cinematic {
+  background: radial-gradient(circle at 50% 0%, rgba(93, 63, 211, 0.15) 0%, rgba(11, 12, 16, 0) 50%),
+              radial-gradient(circle at 100% 100%, rgba(255, 198, 92, 0.1) 0%, rgba(11, 12, 16, 0) 40%);
 }
