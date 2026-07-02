@@ -41,10 +41,12 @@ export function NovelWorkspaceLayout() {
   return (
     <div className="shell">
       <header className="topnav" style={{ position: 'sticky', top: 0, zIndex: 100 }}>
-        <div className="container topnav-inner">
+        {/* Force row layout — workspace has its own sidebar overlay, we don't want column topnav */}
+        <div className="container topnav-inner" style={{ flexDirection: 'row', alignItems: 'center', padding: 0, paddingInline: 'var(--container-gutter-desktop)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
             <button
-              className="btn btn-ghost btn-icon mobile-nav-toggle"
+              className="btn btn-ghost btn-icon"
+              style={{ display: 'inline-flex' }}
               aria-label="Toggle sidebar"
               onClick={toggleSidebar}
             >

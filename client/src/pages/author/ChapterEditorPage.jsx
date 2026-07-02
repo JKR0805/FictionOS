@@ -46,7 +46,7 @@ const MenuBar = ({ editor }) => {
   }
 
   return (
-    <div className="row" style={{ gap: 'var(--space-2)', padding: 'var(--space-2)', borderBottom: '1px solid var(--border)', background: 'var(--bg)', flexWrap: 'wrap' }}>
+    <div className="row editor-toolbar" style={{ gap: 'var(--space-2)', padding: 'var(--space-2)', borderBottom: '1px solid var(--border)', background: 'var(--bg)', flexWrap: 'wrap', overflowX: 'auto' }}>
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
@@ -295,7 +295,7 @@ export default function ChapterEditorPage() {
 
   return (
     <div className="stack-lg" style={{ height: '100%', display: 'flex', flexDirection: 'column', paddingTop: 'var(--space-4)' }}>
-      <div className="row-between">
+      <div className="editor-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
         <input
           type="text"
           value={title}
@@ -308,10 +308,11 @@ export default function ChapterEditorPage() {
             background: 'transparent',
             outline: 'none',
             flex: 1,
+            minWidth: '200px',
             color: 'var(--fg)'
           }}
         />
-        <div className="row" style={{ gap: 'var(--space-2)' }}>
+        <div className="row" style={{ gap: 'var(--space-2)', flexShrink: 0 }}>
           <button className="btn btn-ghost" onClick={() => navigate(`/author/novel/${novelId}/chapters`)}>Cancel</button>
           <button
             className="btn"

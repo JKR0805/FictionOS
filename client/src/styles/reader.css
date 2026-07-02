@@ -1,5 +1,54 @@
 /* ─── Reader Experience Styles ─── */
 
+/* ─── Landing Page Responsive Rules ─── */
+/* Hero grid: 2-col on desktop, 1-col on mobile */
+.landing-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1.1fr);
+  gap: clamp(var(--space-6), 6vw, var(--space-10));
+  align-items: center;
+}
+/* Hero copy: left-aligned on desktop */
+.hero-copy { display: grid; gap: var(--space-5); }
+/* Author dashboard */
+.author-dashboard-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/* Hero actions: row of buttons */
+.hero-actions { display: flex; gap: var(--space-4); flex-wrap: wrap; align-items: center; }
+.tablet-content-grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr 200px;
+}
+
+/* The graph panel on the right side of hero */
+.landing-hero-graph {
+  position: relative;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .landing-hero-grid { grid-template-columns: 1fr; margin-top: var(--space-12); }
+  .landing-hero-graph { display: none !important; } /* Heavy SVG — hide on mobile */
+  .landing-laptop-frame { display: none !important; } /* Laptop frame too wide for mobile */
+  .landing-tablet-sidebar { display: none; } /* Sidebar in tablet frame demo */
+}
+
+@media (max-width: 560px) {
+  .landing-hero-grid .hero-copy { text-align: center; }
+  .hero-actions { justify-content: center; }
+  .tablet-content-grid { grid-template-columns: 1fr; }
+}
 .reader-layout {
   display: grid;
   grid-template-columns: 220px minmax(0, 760px) 260px;
@@ -8,6 +57,7 @@
   align-items: start;
   padding-block: var(--space-8);
 }
+
 .reader-article {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -36,32 +86,65 @@
 
 .reader-rail { position: sticky; top: 88px; display: grid; gap: var(--space-4); }
 
+/* Reader display settings floating toggle (mobile) */
+.reader-settings-toggle {
+  display: none;
+  position: fixed;
+  bottom: var(--space-5);
+  right: var(--space-4);
+  z-index: 50;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-pill);
+  background: var(--indigo-pulse);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 20px rgba(91, 110, 255, 0.4);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--motion-fast) var(--ease-standard), box-shadow var(--motion-fast) var(--ease-standard);
+}
+.reader-settings-toggle:hover { transform: scale(1.05); box-shadow: 0 6px 24px rgba(91, 110, 255, 0.5); }
+
+.reader-settings-sheet {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 49;
+  background: var(--surface);
+  border-top: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: var(--space-6) var(--space-4);
+  box-shadow: 0 -8px 40px rgba(0,0,0,0.5);
+  max-height: 80vh;
+  overflow-y: auto;
+  gap: var(--space-4);
+  flex-direction: column;
+}
+.reader-settings-sheet.is-open { display: flex; }
+
 /* ─── Responsive Breakpoints ─── */
 
-@media (max-width: 560px) {
-  .filters-dialog {
-    width: 100%;
-    margin: 0;
-    border-left: none;
-    border-right: none;
-    border-bottom: none;
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
-  .filters-dialog-body { max-height: min(72vh, 760px); }
-}
-
+/* === 1180px — Hide left reader rail, grid-4 → 2 cols === */
 @media (max-width: 1180px) {
   .reader-layout { grid-template-columns: minmax(0, 760px) 240px; }
   .reader-layout .reader-rail:first-child { display: none; }
   .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
+/* === 920px — Major tablet breakpoint === */
 @media (max-width: 920px) {
+  /* Mobile sidebar toggle */
   .mobile-nav-toggle { display: inline-flex; }
+  .mobile-menu-toggle { display: flex; }
+  .mobile-only { display: block; }
+  .desktop-only { display: none; }
+
+  /* App sidebar (workspace) becomes drawer */
   .app-sidebar {
     position: fixed;
     top: 64px;
@@ -73,11 +156,15 @@
     transform: translateX(-100%);
     transition: transform var(--motion-base) var(--ease-standard);
     overflow-y: auto;
+    height: auto;
+    border-right: 1px solid var(--border);
   }
   .app-sidebar.is-open {
     transform: translateX(0);
     box-shadow: var(--elev-raised);
   }
+
+  /* Overlay */
   .sidebar-overlay {
     display: none;
     position: fixed;
@@ -91,18 +178,70 @@
     transition: opacity var(--motion-base) var(--ease-standard);
   }
   .sidebar-overlay.is-open { display: block; opacity: 1; }
+
+  /* Dashboard layout collapses */
+  .dashboard-layout { grid-template-columns: 1fr; }
+
+  /* Container */
   .container { padding-inline: var(--container-gutter-tablet); }
-  .topnav-inner { align-items: stretch; flex-direction: column; padding-block: var(--space-3); }
-  .navlinks { width: 100%; }
-  .nav-cta { display: none; }
-  .hero-split, .grid-2, .grid-3, .grid-main, .workspace, .dashboard-layout { grid-template-columns: 1fr; }
-  .sidebar, .app-sidebar { border-right: 0; border-bottom: 1px solid var(--border); }
+
+  /* Grid collapses */
+  .hero-split,
+  .grid-2,
+  .grid-3,
+  .grid-main,
+  .workspace { grid-template-columns: 1fr; }
+
+  /* In grid-main: put main content first on mobile (aside becomes secondary) */
+  .grid-main > :last-child { order: 2; }
+  .grid-main > :first-child { order: 1; }
+
+  /* Sidebar adjustments */
+  .sidebar { border-right: 0; border-bottom: 1px solid var(--border); }
   .side-link { min-height: 44px; }
+
+  /* Reader layout: full width, single column */
   .reader-layout { grid-template-columns: 1fr; padding-inline: var(--container-gutter-tablet); }
   .reader-rail { position: static; }
-  .reader-controls { position: sticky; top: calc(64px + var(--space-3)); z-index: 15; }
+  .reader-controls { display: none; } /* Hidden — moved to floating button */
+  .reader-settings-toggle { display: flex; }
+
+  /* Stack-lg gap reduction on tablet */
+  .stack-lg { gap: var(--space-6); }
+
+  /* App main padding */
+  .app-main { padding: var(--space-4); }
 }
 
+/* === 768px — Tablet portrait === */
+@media (max-width: 768px) {
+  /* Show mobile-menu toggle in public nav */
+  .mobile-menu-toggle { display: flex; }
+
+  .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  /* Reduce heading sizes further */
+  h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.6rem; }
+
+  /* Topnav: keep single row, just hide navlinks text  */
+  .navlinks { display: none; }
+  .navlinks.is-open {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: var(--space-2) 0;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Make footer columns wrap */
+  .footer-row { flex-direction: column; gap: var(--space-6); }
+
+  /* Filters panel: single column */
+  .grid-2.filters-grid { grid-template-columns: 1fr; }
+}
+
+/* === 600px — Small tablets / large phones === */
 @media (max-width: 600px) {
   .grid-4 { grid-template-columns: 1fr; }
   .tabs {
@@ -114,15 +253,94 @@
     border-left: none;
     border-right: none;
   }
+
+  /* Novel detail: cover image centering */
+  .novel-header-row { flex-direction: column; align-items: center; text-align: center; }
+  .novel-header-row .stack { align-items: center; }
+  .novel-header-row .row { justify-content: center; }
+
+  /* Hero actions: full width buttons */
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .hero-actions a, .hero-actions button { justify-content: center; width: 100%; }
 }
 
+/* === 560px — Phones === */
 @media (max-width: 560px) {
   .container { padding-inline: var(--container-gutter-phone); }
   .section { padding-block: var(--section-y-phone); }
+
+  /* row-between: stack vertically */
   .row-between { align-items: start; flex-direction: column; }
-  .grid-4 { grid-template-columns: 1fr; }
+  /* Override for very specific inline items that should stay horizontal */
+  .row-between.keep-row { flex-direction: row; align-items: center; }
+
   .workspace-main, .app-main { padding: var(--space-4); }
-  .panel-head, .chapter-item, .story-row { grid-template-columns: 1fr; align-items: start; }
+  .panel-head { grid-template-columns: 1fr; align-items: start; }
+  .chapter-item { grid-template-columns: 1fr; align-items: start; }
+  .story-row { grid-template-columns: 44px minmax(0, 1fr); }
   .recommended-reads .chapter-item { grid-template-columns: 40px minmax(0, 1fr); }
   .shelf { grid-auto-columns: minmax(160px, 76vw); }
+
+  /* Reader layout padding */
+  .reader-layout { padding-inline: var(--container-gutter-phone); }
+  .reader-article { padding: var(--space-4); border-radius: var(--radius-md); }
+  .reader-article .chapter-title { margin-bottom: var(--space-6); }
+
+  /* Hide "Read Stories" / "Publish Stories" labels on very small screens — keep icon */
+  .hero-lead { font-size: 1.05rem; }
+
+  /* Filters dialog bottom sheet */
+  .filters-dialog {
+    width: 100%;
+    margin: 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .filters-dialog-body { max-height: min(72vh, 760px); }
+
+  /* Card padding reduction */
+  .card-pad { padding: var(--space-4); }
+
+  /* grid-2 → 1col on phones */
+  .grid-2 { grid-template-columns: 1fr; }
+
+  /* Chapter editor title bar */
+  .editor-header { flex-direction: column; align-items: stretch; gap: var(--space-3); }
+  .editor-header .row { justify-content: flex-end; flex-wrap: wrap; }
+
+  /* Profile page: avatar centering */
+  .profile-header { flex-direction: column; align-items: center; text-align: center; }
+  .profile-header .edit-btn { align-self: stretch; justify-content: center; }
+
+  /* Bottom padding for reader floating button */
+  .reader-article { padding-bottom: calc(var(--space-4) + 60px); }
+}
+
+/* === 480px — Small phones === */
+@media (max-width: 480px) {
+  /* Topnav brand: hide text on very small screens */
+  .brand > span:last-child { display: none; }
+  .brand-mark { width: 34px; height: 34px; font-size: 11px; }
+
+  /* Reduce stack-lg gap */
+  .stack-lg { gap: var(--space-5); }
+
+  /* Shelf books: slightly smaller */
+  .shelf { grid-auto-columns: minmax(140px, 70vw); }
+
+  /* Chapter editor toolbar: allow horizontal scroll */
+  .editor-toolbar { overflow-x: auto; flex-wrap: nowrap !important; padding-bottom: var(--space-2); }
+
+  /* Profile stats: 2 cols */
+  .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  /* Author dashboard: init button full width */
+  .author-dashboard-header { flex-direction: column; align-items: stretch; }
+  .init-btn-full { width: 100%; justify-content: center; }
 }

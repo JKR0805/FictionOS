@@ -1,9 +1,5 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
-import { formatCount } from '@/lib/utils'
 import { LaptopFrame, PhoneFrame, TabletFrame } from '@/components/ui/DeviceFrames'
-import { NovelCover } from '@/components/shared/NovelCover'
-import { DISCOVER_GENRES } from '@/data/mockData'
 import { NarrativeCoreGraph } from '@/components/ui/NarrativeCoreGraph'
 import { StarMapConstellation } from '@/components/ui/StarMapConstellation'
 import { StoryIntelligenceGraph } from '@/components/ui/StoryIntelligenceGraph'
@@ -38,7 +34,6 @@ const GlobalNarrativeThread = () => (
     
     <g className="stars">
       {Array.from({ length: 150 }).map((_, i) => {
-        // pseudo-random deterministic position based on index
         const x = (i * 137) % 1440;
         const y = (i * 937) % 4200;
         const r = (i % 3 === 0) ? 1.5 : 0.8;
@@ -69,31 +64,44 @@ export default function LandingPage() {
     <div className="bg-cinematic" style={{ position: 'relative', overflow: 'hidden' }}>
       <GlobalNarrativeThread />
       
-      {/* 1. Hero Section: The Operating System for Stories */}
+      {/* 1. Hero Section */}
       <section className="section flush-top" style={{ position: 'relative', minHeight: '85vh', paddingTop: 'var(--space-12)' }}>
-        
-        <div className="container" style={{ position: 'relative', zIndex: 10, display: 'grid', gridTemplateColumns: 'minmax(0, 0.9fr) minmax(320px, 1.1fr)', gap: 'var(--space-12)', alignItems: 'center', height: '100%' }}>
-          
-          <div className="hero-copy">
-            <h1 style={{ fontSize: 'clamp(3rem, 5vw, 4.5rem)', letterSpacing: '-0.03em', lineHeight: 1.05, margin: 0, textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
-              <strong style={{ fontWeight: 800 }}>FictionOS</strong> <br />
-              <span style={{ color: 'var(--fg-2)', opacity: 0.9, fontSize: '0.6em', fontWeight: 400 }}>The Operating System for Stories</span>
-            </h1>
-            <p className="lead" style={{ fontSize: '1.25rem', color: 'var(--muted)', maxWidth: '500px', lineHeight: 1.6 }}>
-              A high fidelity cinematic landing page for FictionOS, cross-platform networks, and a pulses maker of interconnected threads.
-            </p>
-            <div className="hero-actions" style={{ display: 'flex', gap: 'var(--space-4)' }}>
-              <Link className="btn glow-border" to="/reader" style={{ background: 'var(--amber-glow)', color: '#000', padding: 'var(--space-3) var(--space-6)', fontSize: '1.1rem', borderRadius: 'var(--radius-pill)', border: 'none', boxShadow: '0 0 15px rgba(246, 185, 74, 0.4)', fontWeight: 600 }}>
-                Read Stories
-              </Link>
-              <Link className="btn glow-border" to="/author" style={{ background: 'transparent', padding: 'var(--space-3) var(--space-6)', fontSize: '1.1rem', color: 'var(--indigo-pulse)', border: '1px solid var(--indigo-pulse)', borderRadius: 'var(--radius-pill)', boxShadow: '0 0 15px rgba(91, 110, 255, 0.2)', fontWeight: 600 }}>
-                Publish Stories
-              </Link>
+        <div
+          className="container"
+          style={{
+            position: 'relative',
+            zIndex: 10,
+            display: 'grid',
+            gridTemplateColumns: 'minmax(0, 1fr)',
+            gap: 'var(--space-8)',
+            alignItems: 'center',
+          }}
+        >
+          {/* Hero — responsive two-col on large, single-col on mobile */}
+          <div className="landing-hero-grid">
+            <div className="hero-copy">
+              <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 4.5rem)', letterSpacing: '-0.03em', lineHeight: 1.05, margin: 0, textShadow: '0 4px 20px rgba(0,0,0,0.5)' }}>
+                <strong style={{ fontWeight: 800 }}>FictionOS</strong>
+                <br />
+                <span style={{ color: 'var(--fg-2)', opacity: 0.9, fontSize: '0.6em', fontWeight: 400 }}>The Operating System for Stories</span>
+              </h1>
+              <p className="lead" style={{ fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', color: 'var(--muted)', lineHeight: 1.6 }}>
+                A high fidelity cinematic platform for serial fiction — connecting readers, authors, and their stories across narrative threads.
+              </p>
+              <div className="hero-actions">
+                <Link className="btn glow-border" to="/reader" style={{ background: 'var(--amber-glow)', color: '#000', padding: 'var(--space-3) var(--space-6)', fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', borderRadius: 'var(--radius-pill)', border: 'none', boxShadow: '0 0 15px rgba(246, 185, 74, 0.4)', fontWeight: 600 }}>
+                  Read Stories
+                </Link>
+                <Link className="btn glow-border" to="/author" style={{ background: 'transparent', padding: 'var(--space-3) var(--space-6)', fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', color: 'var(--indigo-pulse)', border: '1px solid var(--indigo-pulse)', borderRadius: 'var(--radius-pill)', boxShadow: '0 0 15px rgba(91, 110, 255, 0.2)', fontWeight: 600 }}>
+                  Publish Stories
+                </Link>
+              </div>
             </div>
-          </div>
 
-          <div style={{ position: 'relative', height: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <NarrativeCoreGraph />
+            {/* Hero graph — hidden on mobile via .landing-hero-graph CSS rule */}
+            <div className="landing-hero-graph">
+              <NarrativeCoreGraph />
+            </div>
           </div>
         </div>
       </section>
@@ -102,31 +110,33 @@ export default function LandingPage() {
       <section id="features" className="section" style={{ position: 'relative', minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div className="container" style={{ position: 'relative', zIndex: 10 }}>
           <div style={{ maxWidth: '600px', textAlign: 'left', marginLeft: '5%' }}>
-            <h2 style={{ fontFamily: 'var(--font-reading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', letterSpacing: '-0.02em', textShadow: '0 4px 12px rgba(0,0,0,0.8)' }}>Navigate the Universe</h2>
-            <p className="lead" style={{ margin: 'var(--space-4) 0 0', fontSize: '1.25rem', color: 'var(--muted)', textShadow: '0 2px 8px rgba(0,0,0,0.8)', lineHeight: 1.6 }}>
-              A constellation of story covers grouped into genre clusters, <br/> where narrative threads form a star map.
+            <h2 style={{ fontFamily: 'var(--font-reading)', fontSize: 'clamp(1.8rem, 5vw, 4rem)', letterSpacing: '-0.02em', textShadow: '0 4px 12px rgba(0,0,0,0.8)' }}>Navigate the Universe</h2>
+            <p className="lead" style={{ margin: 'var(--space-4) 0 0', fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', color: 'var(--muted)', textShadow: '0 2px 8px rgba(0,0,0,0.8)', lineHeight: 1.6 }}>
+              A constellation of story covers grouped into genre clusters, <br className="desktop-only"/> where narrative threads form a star map.
             </p>
           </div>
           
-          <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflowX: 'hidden' }}>
             <StarMapConstellation />
           </div>
         </div>
       </section>
 
-      {/* 3. The Night Mode Reader (Reader Showcase) */}
+      {/* 3. The Night Mode Reader */}
       <section id="for-readers" className="section" style={{ position: 'relative' }}>
         <div className="container" style={{ position: 'relative', zIndex: 10, textAlign: 'center' }}>
           <div>
             <p className="eyebrow glow-text-amber" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)', fontSize: '0.85rem' }}>Reader Experience:</p>
-            <h2 style={{ fontFamily: 'var(--font-reading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', letterSpacing: '-0.02em', textShadow: '0 4px 12px rgba(0,0,0,0.8)' }}>The Night Mode Reader</h2>
-            <p className="lead" style={{ margin: 'var(--space-4) auto 0', fontSize: '1.25rem', color: 'var(--muted)', textShadow: '0 2px 8px rgba(0,0,0,0.8)', lineHeight: 1.6 }}>
-              Libero expellendis ratione vel soluta animi sit maxime cumque sed dolorem consequatur error eaque id deserunt praesentium.
+            <h2 style={{ fontFamily: 'var(--font-reading)', fontSize: 'clamp(1.8rem, 5vw, 4rem)', letterSpacing: '-0.02em', textShadow: '0 4px 12px rgba(0,0,0,0.8)' }}>The Night Mode Reader</h2>
+            <p className="lead" style={{ margin: 'var(--space-4) auto 0', fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', color: 'var(--muted)', textShadow: '0 2px 8px rgba(0,0,0,0.8)', lineHeight: 1.6, maxWidth: '600px' }}>
+              A beautiful, distraction-free reading experience optimised for every device — phone, tablet, or desktop.
             </p>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', gap: 'var(--space-8)' }}>
-            <div style={{ position: 'relative', zIndex: 2 }}>
+          {/* Device showcase — stacks on mobile */}
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', gap: 'var(--space-6)', flexWrap: 'wrap', marginTop: 'var(--space-8)' }}>
+            {/* Phone frame — always visible */}
+            <div style={{ position: 'relative', zIndex: 2, flexShrink: 0 }}>
               <PhoneFrame>
                  <div style={{ padding: 'var(--space-6)', background: 'var(--bg)', minHeight: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                     <p className="eyebrow glow-text-amber" style={{ fontSize: '10px', textAlign: 'center' }}>The Spire</p>
@@ -141,10 +151,11 @@ export default function LandingPage() {
               </PhoneFrame>
             </div>
 
-            <div style={{ position: 'relative', zIndex: 1, flex: 1, maxWidth: '800px' }}>
+            {/* Laptop frame — hidden on mobile */}
+            <div className="landing-laptop-frame" style={{ position: 'relative', zIndex: 1, flex: 1, maxWidth: '800px', minWidth: '320px' }}>
               <LaptopFrame>
                  <div style={{ padding: 'var(--space-8)', background: 'var(--bg)', minHeight: '100%', display: 'flex', gap: 'var(--space-6)', alignItems: 'center' }}>
-                    <div style={{ flex: 1 }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
                        <p className="eyebrow glow-text-amber" style={{ fontSize: '12px' }}>The Quiet Index</p>
                        <h1 style={{ fontFamily: 'var(--font-reading)', fontSize: '36px', marginBottom: 'var(--space-6)' }}>Chapter 12: The Obsidian Spire</h1>
                        <p style={{ fontFamily: 'var(--font-reading)', fontSize: '18px', lineHeight: 1.8, color: 'var(--fg)', marginBottom: 'var(--space-4)' }}>
@@ -154,7 +165,7 @@ export default function LandingPage() {
                          She nodded slowly, the amber glow illuminating her face. "And we are just the archivists, ensuring the signal never fades."
                        </p>
                     </div>
-                    <div style={{ width: '200px' }} className="glass-panel stack">
+                    <div style={{ width: '200px', flexShrink: 0 }} className="glass-panel stack">
                        <div style={{ padding: 'var(--space-4)' }}>
                           <h4 className="meta">Characters & Lore</h4>
                           <div className="meta" style={{ marginTop: 'var(--space-2)' }}>• Mira Vale</div>
@@ -172,13 +183,13 @@ export default function LandingPage() {
       <section className="section" style={{ position: 'relative' }}>
         <div className="container" style={{ position: 'relative', zIndex: 10, textAlign: 'center' }}>
           <div>
-            <h2 style={{ fontFamily: 'var(--font-reading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', letterSpacing: '-0.02em', textShadow: '0 4px 12px rgba(0,0,0,0.8)' }}>Story Intelligence Layer</h2>
-            <p className="lead" style={{ margin: 'var(--space-4) auto 0', fontSize: '1.25rem', color: 'var(--muted)', textShadow: '0 2px 8px rgba(0,0,0,0.8)', lineHeight: 1.6 }}>
+            <h2 style={{ fontFamily: 'var(--font-reading)', fontSize: 'clamp(1.8rem, 5vw, 4rem)', letterSpacing: '-0.02em', textShadow: '0 4px 12px rgba(0,0,0,0.8)' }}>Story Intelligence Layer</h2>
+            <p className="lead" style={{ margin: 'var(--space-4) auto 0', fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', color: 'var(--muted)', textShadow: '0 2px 8px rgba(0,0,0,0.8)', lineHeight: 1.6, maxWidth: '600px' }}>
               Visualizing lore consistency, relationship evolution and character dependencies across narrative threads.
             </p>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', overflowX: 'hidden' }}>
              <StoryIntelligenceGraph />
           </div>
         </div>
@@ -189,19 +200,19 @@ export default function LandingPage() {
         <div className="container" style={{ position: 'relative', zIndex: 10,  textAlign: 'center' }}>
           <div>
             <p className="eyebrow glow-text-indigo" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.8)', fontSize: '0.85rem' }}>Author Workspace:</p>
-            <h2 style={{ fontFamily: 'var(--font-reading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', letterSpacing: '-0.02em', textShadow: '0 4px 12px rgba(0,0,0,0.8)' }}>Mission Control</h2>
-            <p className="lead" style={{ margin: 'var(--space-4) auto 0', fontSize: '1.25rem', color: 'var(--muted)', textShadow: '0 2px 8px rgba(0,0,0,0.8)', lineHeight: 1.6 }}>
+            <h2 style={{ fontFamily: 'var(--font-reading)', fontSize: 'clamp(1.8rem, 5vw, 4rem)', letterSpacing: '-0.02em', textShadow: '0 4px 12px rgba(0,0,0,0.8)' }}>Mission Control</h2>
+            <p className="lead" style={{ margin: 'var(--space-4) auto 0', fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', color: 'var(--muted)', textShadow: '0 2px 8px rgba(0,0,0,0.8)', lineHeight: 1.6, maxWidth: '600px' }}>
               High fidelity command center and narrative dashboard tailored for Stories & Systems.
             </p>
           </div>
 
-          <div style={{ marginTop: 'var(--space-6)' }}>
+          <div style={{ marginTop: 'var(--space-6)', overflowX: 'hidden' }}>
             <TabletFrame>
                <div style={{ height: '100%', display: 'flex', background: 'var(--bg)' }}>
-                 {/* Sidebar */}
-                 <div style={{ width: '200px', borderRight: '1px solid var(--border-soft)', padding: 'var(--space-4)', background: 'rgba(0,0,0,0.2)', flexShrink: 0 }}>
+                 {/* Sidebar — hidden on very small frames */}
+                 <div className="landing-tablet-sidebar" style={{ width: '200px', borderRight: '1px solid var(--border-soft)', padding: 'var(--space-4)', background: 'rgba(0,0,0,0.2)', flexShrink: 0 }}>
                     <div className="row" style={{ gap: 'var(--space-2)', marginBottom: 'var(--space-6)' }}>
-                       <div style={{ width: '24px', height: '24px', background: 'var(--indigo-pulse)', borderRadius: '4px' }}></div>
+                       <div style={{ width: '24px', height: '24px', background: 'var(--indigo-pulse)', borderRadius: '4px', flexShrink: 0 }}></div>
                        <span style={{ fontWeight: 600, color: 'var(--fg-2)' }}>FictionOS</span>
                     </div>
                     <div className="stack" style={{ gap: 'var(--space-2)' }}>
@@ -219,7 +230,7 @@ export default function LandingPage() {
                        <button className="btn glow-border" style={{ background: 'var(--indigo-pulse)', color: '#fff', borderRadius: 'var(--radius-sm)' }}>Add Character</button>
                     </div>
                     
-                    <div style={{ display: 'grid', gap: 'var(--space-4)', gridTemplateColumns: '1fr 200px', flex: 1 }}>
+                    <div className="tablet-content-grid" style={{ flex: 1 }}>
                        <div className="glass-panel" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.4)', borderRadius: 'var(--radius-lg)' }}>
                           <span className="meta" style={{ position: 'absolute', top: '16px', left: '16px', zIndex: 20 }}>Character Relationship Network</span>
                           <CharacterRelationshipGraph />
@@ -245,11 +256,11 @@ export default function LandingPage() {
       {/* 6. The Community Ecosystem */}
       <section className="section" style={{ position: 'relative' }}>
          <div className="container" style={{ position: 'relative', zIndex: 10, textAlign: 'center' }}>
-            <h2 style={{ fontFamily: 'var(--font-reading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', letterSpacing: '-0.02em', textShadow: '0 4px 12px rgba(0,0,0,0.8)' }}>The Community</h2>
-            <p className="lead" style={{ margin: 'var(--space-4) auto 0', fontSize: '1.25rem', color: 'var(--muted)', textShadow: '0 2px 8px rgba(0,0,0,0.8)', lineHeight: 1.6 }}>
+            <h2 style={{ fontFamily: 'var(--font-reading)', fontSize: 'clamp(1.8rem, 5vw, 4rem)', letterSpacing: '-0.02em', textShadow: '0 4px 12px rgba(0,0,0,0.8)' }}>The Community</h2>
+            <p className="lead" style={{ margin: 'var(--space-4) auto 0', fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', color: 'var(--muted)', textShadow: '0 2px 8px rgba(0,0,0,0.8)', lineHeight: 1.6, maxWidth: '600px' }}>
               Shared visualizations where active readers, collaborators and reader communities collaborate and grow the stories.
             </p>
-            <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflowX: 'hidden' }}>
                <CommunityEcosystemGraph />
             </div>
          </div>

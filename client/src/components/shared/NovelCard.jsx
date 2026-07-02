@@ -87,7 +87,7 @@ export function NovelListCard({ novel, href }) {
         <span className="meta body-sm">
           Latest: <span style={{ color: 'var(--fg-2)' }}>Ch {novel.latestChapter?.number}</span> ({novel.latestChapter?.publishedAt?.slice(0, 10) || '—'})
         </span>
-        <span className="meta body-sm"><span style={{ color: 'var(--accent)' }}>{formatCount(novel.totalViews)}</span> Nodes</span>
+        <span className="meta body-sm"><span style={{ color: 'var(--accent)' }}>{formatCount(novel.totalViews ?? 0)}</span> Nodes</span>
       </div>
     </Link>
   )

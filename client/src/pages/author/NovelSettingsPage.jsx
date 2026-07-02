@@ -99,10 +99,10 @@ export default function NovelSettingsPage() {
 
       <div className="card card-pad stack-lg" style={{ maxWidth: '800px', marginTop: 'var(--space-4)' }}>
         <form className="stack-lg" onSubmit={handleSave}>
-          <div className="row" style={{ gap: 'var(--space-6)', alignItems: 'flex-start' }}>
-            <div className="stack" style={{ width: '180px', flexShrink: 0 }}>
+          <div style={{ display: 'flex', gap: 'var(--space-6)', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+            <div className="stack" style={{ width: 'clamp(140px, 20vw, 180px)', flexShrink: 0 }}>
               <label>Book Cover</label>
-              <NovelCover title={title} novelId={novelId} coverUrl={coverUrl} style={{ width: '180px', height: '270px', borderRadius: 'var(--radius-md)', overflow: 'hidden' }} />
+              <NovelCover title={title} novelId={novelId} coverUrl={coverUrl} style={{ width: '100%', height: 'auto', aspectRatio: '2/3', borderRadius: 'var(--radius-md)', overflow: 'hidden' }} />
               
               <input 
                 type="file" 
@@ -121,7 +121,8 @@ export default function NovelSettingsPage() {
               </button>
             </div>
 
-            <div className="stack" style={{ flex: 1 }}>
+            <div className="stack" style={{ flex: 1, minWidth: '240px' }}>
+
               <div className="field">
                 <label htmlFor="coverUrl">Or paste a Cover URL</label>
                 <input 

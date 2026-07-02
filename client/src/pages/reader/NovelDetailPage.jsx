@@ -39,16 +39,16 @@ export default function NovelDetailPage() {
             <>
               {/* Novel header */}
               <div className="glass-panel glow-border" style={{ padding: 'var(--space-6)' }}>
-                <div className="row" style={{ gap: 'var(--space-6)', alignItems: 'flex-start' }}>
+                <div className="novel-header-row" style={{ display: 'flex', gap: 'var(--space-6)', alignItems: 'flex-start', flexWrap: 'wrap' }}>
                   <NovelCover
                     title={novel.title}
                     novelId={novel.id}
                     coverUrl={novel.coverUrl}
-                    style={{ width: '200px', flexShrink: 0, boxShadow: 'var(--shadow-glow)' }}
+                    style={{ width: 'clamp(120px, 20vw, 200px)', flexShrink: 0, boxShadow: 'var(--shadow-glow)' }}
                   />
-                  <div className="stack" style={{ flex: 1 }}>
+                  <div className="stack" style={{ flex: 1, minWidth: 0 }}>
                     <div className="row" style={{ gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
-                      <h1 style={{ fontFamily: 'var(--font-reading)', fontSize: 'clamp(2rem, 4vw, 3rem)', margin: 0, color: 'var(--fg-2)', lineHeight: 1.1 }}>{novel.title}</h1>
+                      <h1 style={{ fontFamily: 'var(--font-reading)', fontSize: 'clamp(1.5rem, 4vw, 3rem)', margin: 0, color: 'var(--fg-2)', lineHeight: 1.1 }}>{novel.title}</h1>
                       <StatusBadge status={novel.status} />
                     </div>
                     <p className="meta glow-text-indigo" style={{ fontSize: 'var(--text-lg)' }}>by {novel.authorName}</p>
@@ -59,17 +59,17 @@ export default function NovelDetailPage() {
                       {novel.genre?.map((g) => (
                         <span key={g} className="badge" style={{ background: 'rgba(93, 63, 211, 0.2)', color: 'var(--fg-2)', border: '1px solid var(--indigo-pulse)', boxShadow: '0 0 8px rgba(93, 63, 211, 0.3)' }}>{g}</span>
                       ))}
-                      <div className="row meta body-sm" style={{ gap: 'var(--space-4)', marginLeft: 'var(--space-2)' }}>
+                      <div className="row meta body-sm" style={{ gap: 'var(--space-4)', marginLeft: 'var(--space-2)', flexWrap: 'wrap' }}>
                         <span className="row glow-text-amber" style={{ gap: '6px', alignItems: 'center' }}><Eye size={16} /> {formatCount(novel.totalViews)} <span className="meta" style={{fontSize: '10px'}}>Views</span></span>
                         <span className="row glow-text-amber" style={{ gap: '6px', alignItems: 'center' }}><BookOpen size={16} /> {formatCount(novel.totalReads)} <span className="meta" style={{fontSize: '10px'}}>Reads</span></span>
                         <span className="row glow-text-amber" style={{ gap: '6px', alignItems: 'center' }}><Users size={16} /> {formatCount(novel.followersCount)} <span className="meta" style={{fontSize: '10px'}}>Followers</span></span>
                       </div>
                     </div>
 
-                    <div className="row" style={{ gap: 'var(--space-4)', marginTop: 'var(--space-6)' }}>
+                    <div style={{ display: 'flex', gap: 'var(--space-4)', marginTop: 'var(--space-6)', flexWrap: 'wrap' }}>
                       <button
                         className="btn glass-panel glow-border"
-                        style={{ background: 'var(--indigo-pulse)', color: '#fff', border: 'none', padding: 'var(--space-2) var(--space-6)', fontSize: 'var(--text-base)', boxShadow: 'var(--shadow-glow)' }}
+                        style={{ background: 'var(--indigo-pulse)', color: '#fff', border: 'none', padding: 'var(--space-2) var(--space-6)', fontSize: 'var(--text-base)', boxShadow: 'var(--shadow-glow)', flex: '1 1 160px', justifyContent: 'center' }}
                         disabled={!firstChapter}
                         onClick={() => {
                           if (novel.lastReadChapterId) {
@@ -83,7 +83,7 @@ export default function NovelDetailPage() {
                       </button>
                       <button
                         className="btn glass-panel"
-                        style={{ padding: 'var(--space-2) var(--space-6)', color: 'var(--fg-2)', border: '1px solid var(--border-soft)' }}
+                        style={{ padding: 'var(--space-2) var(--space-6)', color: 'var(--fg-2)', border: '1px solid var(--border-soft)', flex: '1 1 160px', justifyContent: 'center' }}
                         disabled={toggleFollow.isPending}
                         onClick={() => toggleFollow.mutate(id)}
                       >

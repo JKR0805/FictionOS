@@ -44,15 +44,19 @@ export default function AuthorDashboardPage() {
     <section className="section flush-top bg-cinematic" style={{ minHeight: 'calc(100vh - 64px)', position: 'relative' }}>
       <div className="container stack-lg" style={{ position: 'relative', zIndex: 10, paddingTop: 'var(--space-4)' }}>
         
-        <div className="row-between" style={{ borderBottom: '1px solid var(--border-soft)', paddingBottom: 'var(--space-4)' }}>
+        <div className="author-dashboard-header" style={{ borderBottom: '1px solid var(--border-soft)', paddingBottom: 'var(--space-4)' }}>
           <div>
             <p className="eyebrow glow-text-indigo">Mission Control</p>
             <h1 style={{ fontFamily: 'var(--font-reading)', margin: 0, color: 'var(--fg-2)', lineHeight: 1.1 }}>Author Workspace</h1>
-            <p className="lead" style={{ marginTop: 'var(--space-2)', color: 'var(--fg)' }}>
+            <p className="lead" style={{ marginTop: 'var(--space-2)', color: 'var(--fg)', fontSize: 'clamp(1rem, 2.5vw, 1.25rem)' }}>
               Select a narrative system to initialize its dedicated environment.
             </p>
           </div>
-          <button className="btn glass-panel glow-border" style={{ background: 'rgba(93, 63, 211, 0.2)', color: 'var(--fg-2)', border: '1px solid var(--indigo-pulse)' }} onClick={() => setShowCreate(true)}>
+          <button
+            className="btn glass-panel glow-border init-btn-full"
+            style={{ background: 'rgba(93, 63, 211, 0.2)', color: 'var(--fg-2)', border: '1px solid var(--indigo-pulse)', whiteSpace: 'nowrap' }}
+            onClick={() => setShowCreate(true)}
+          >
             <Plus size={16} style={{ marginRight: '6px' }} />
             Initialize New Project
           </button>
@@ -78,7 +82,14 @@ export default function AuthorDashboardPage() {
              />
           </div>
         ) : (
-          <div className="grid-3" style={{ marginTop: 'var(--space-6)', gap: 'var(--space-6)' }}>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(min(280px, 100%), 1fr))',
+              gap: 'var(--space-5)',
+              marginTop: 'var(--space-6)',
+            }}
+          >
             {novels?.map((novel) => (
               <NovelListCard key={novel.id} novel={novel} />
             ))}

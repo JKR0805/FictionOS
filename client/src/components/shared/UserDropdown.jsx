@@ -58,7 +58,7 @@ export function UserDropdown() {
         >
           {initials}
         </div>
-        <span className="body-sm" style={{ fontWeight: 500 }}>
+        <span className="body-sm desktop-only" style={{ fontWeight: 500 }}>
           {displayName}
         </span>
       </button>

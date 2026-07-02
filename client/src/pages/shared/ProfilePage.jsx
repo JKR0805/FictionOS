@@ -35,17 +35,17 @@ export default function ProfilePage() {
     <div>
       <section className="section" data-od-id="profile-header">
         <div className="container stack-lg">
-          <div className="row" style={{ gap: 'var(--space-6)', alignItems: 'flex-start' }}>
+          <div className="profile-header" style={{ display: 'flex', gap: 'var(--space-6)', alignItems: 'flex-start', flexWrap: 'wrap' }}>
             <div
               style={{
-                width: '112px',
-                height: '112px',
+                width: 'clamp(80px, 15vw, 112px)',
+                height: 'clamp(80px, 15vw, 112px)',
                 borderRadius: 'var(--radius-pill)',
                 background: 'var(--accent)',
                 color: 'var(--accent-on)',
                 display: 'grid',
                 placeItems: 'center',
-                fontSize: 'var(--text-2xl)',
+                fontSize: 'clamp(var(--text-xl), 4vw, var(--text-2xl))',
                 fontWeight: 500,
                 flexShrink: 0,
               }}
@@ -53,23 +53,23 @@ export default function ProfilePage() {
               {initials}
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <h1 style={{ fontSize: 'var(--text-3xl)', marginBottom: 'var(--space-1)' }}>{displayName}</h1>
+              <h1 style={{ fontSize: 'clamp(var(--text-2xl), 4vw, var(--text-3xl))', marginBottom: 'var(--space-1)' }}>{displayName}</h1>
               <p className="body-sm meta" style={{ marginBottom: 'var(--space-3)' }}>
                 @{username} • Joined Oct 2025
               </p>
               <p style={{ maxWidth: '700px', marginBottom: 'var(--space-4)' }}>
                 {user.bio || 'Voracious reader of science fiction and fantasy. I leave detailed reviews for stories that keep me up past 3 AM. I also write suspenseful urban fantasy.'}
               </p>
-              <div className="row" style={{ gap: 'var(--space-4)' }}>
+              <div className="row" style={{ gap: 'var(--space-4)', flexWrap: 'wrap' }}>
                 <a href="#" className="row" style={{ gap: 'var(--space-2)', color: 'var(--fg)', textDecoration: 'underline' }}><span className="meta">{username}.com</span></a>
                 <a href="#" className="row" style={{ gap: 'var(--space-2)', color: 'var(--fg)', textDecoration: 'underline' }}><span className="meta">Twitter</span></a>
               </div>
             </div>
-            <button className="btn">Edit Profile</button>
+            <button className="btn edit-btn" style={{ flexShrink: 0 }}>Edit Profile</button>
           </div>
           
           {/* Tabs */}
-          <div className="tabs" style={{ marginTop: 'var(--space-4)', width: 'fit-content' }}>
+          <div className="tabs" style={{ marginTop: 'var(--space-4)', width: 'fit-content', maxWidth: '100%' }}>
             <button
               className={`tab ${activeTab === 'reader' ? 'is-active' : ''}`}
               aria-selected={activeTab === 'reader'}

@@ -15,10 +15,10 @@ export default function NovelOverviewPage() {
 
   return (
     <div className="stack-lg">
-      <div className="row-between">
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-4)', alignItems: 'flex-start', justifyContent: 'space-between' }}>
         <div>
-          <div className="row" style={{ gap: 'var(--space-3)', alignItems: 'center' }}>
-            <h1 style={{ margin: 0 }}>{novel.title}</h1>
+          <div className="row" style={{ gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
+            <h1 style={{ margin: 0, fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>{novel.title}</h1>
             <StatusBadge status={novel.status} />
           </div>
           <p className="meta" style={{ marginTop: 'var(--space-2)' }}>Manage manuscript, tracking, and settings.</p>
@@ -27,10 +27,10 @@ export default function NovelOverviewPage() {
 
       {/* Novel summary */}
       <div className="card card-pad" style={{ marginTop: 'var(--space-4)' }}>
-        <div className="row" style={{ gap: 'var(--space-4)', alignItems: 'flex-start' }}>
-          <NovelCover title={novel.title} novelId={novel.id} coverUrl={novel.coverUrl} style={{ width: '80px', flexShrink: 0, fontSize: '12px' }} />
-          <div>
-            <div className="row" style={{ gap: 'var(--space-3)', alignItems: 'center', marginBottom: 'var(--space-2)' }}>
+        <div className="row" style={{ gap: 'var(--space-4)', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+          <NovelCover title={novel.title} novelId={novel.id} coverUrl={novel.coverUrl} style={{ width: 'clamp(60px, 10vw, 80px)', flexShrink: 0, fontSize: '12px' }} />
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div className="row" style={{ gap: 'var(--space-3)', alignItems: 'center', marginBottom: 'var(--space-2)', flexWrap: 'wrap' }}>
               <h3 style={{ fontSize: 'var(--text-xl)', margin: 0 }}>{novel.title}</h3>
               <StatusBadge status={novel.status} />
             </div>
@@ -49,6 +49,7 @@ export default function NovelOverviewPage() {
           <StatsCard label="Completion Rate" value={`${novel.completionRate}%`} />
         </div>
       </div>
+
 
       <div className="grid-2" style={{ marginTop: 'var(--space-4)' }}>
         {/* Growth & Trends */}

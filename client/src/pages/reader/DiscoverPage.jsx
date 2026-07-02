@@ -86,7 +86,7 @@ export default function DiscoverPage() {
 
           {/* Advanced filters (collapsible) */}
           {showFilters && (
-            <div className="grid-2" style={{ gap: 'var(--space-6)', marginTop: 'var(--space-4)', paddingTop: 'var(--space-4)', borderTop: '1px solid var(--border-soft)' }}>
+            <div className="grid-2 filters-grid" style={{ gap: 'var(--space-6)', marginTop: 'var(--space-4)', paddingTop: 'var(--space-4)', borderTop: '1px solid var(--border-soft)' }}>
               <div className="field stack" style={{ gap: 'var(--space-2)' }}>
                 <label className="meta">Status</label>
                 <select style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid var(--border-soft)', padding: 'var(--space-2)', borderRadius: 'var(--radius-sm)', color: 'var(--fg-2)' }}>
@@ -107,6 +107,7 @@ export default function DiscoverPage() {
               </div>
             </div>
           )}
+
         </div>
 
         {/* Genre Clusters */}

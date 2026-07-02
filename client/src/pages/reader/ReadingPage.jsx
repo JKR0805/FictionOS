@@ -1,10 +1,10 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom'
 import { useChapter, useChapters, useMarkAsRead } from '@/hooks/useNovels'
 import { useReaderStore } from '@/stores/readerStore'
 import { useThemeStore } from '@/stores/themeStore'
 import { Skeleton } from '@/components/ui/Skeleton'
-import { Settings, BookOpen, Link as LinkIcon, Disc } from 'lucide-react'
+import { Settings, BookOpen, Link as LinkIcon, Disc, X } from 'lucide-react'
 
 const THEMES = [
   { key: 'light', label: 'Daylight', bg: '#ffffff', fg: '#111827', border: '#e5e7eb' },
@@ -12,6 +12,89 @@ const THEMES = [
   { key: 'sepia', label: 'Parchment', bg: '#1A1614', fg: '#D4C4B7', border: 'rgba(232,220,203,0.1)' },
   { key: 'midnight', label: 'Deep Space', bg: '#030508', fg: '#8A99A8', border: 'rgba(176,196,222,0.05)' },
 ]
+
+const DisplaySettingsPanel = ({ fontSize, setFontSize, theme, setTheme }) => (
+  <>
+    <div className="row-between keep-row">
+      <h3 className="glow-text-indigo" style={{ fontSize: 'var(--text-lg)', margin: 0 }}>Display Parameters</h3>
+      <Settings size={16} color="var(--muted)" />
+    </div>
+
+    <div className="stack" style={{ gap: 'var(--space-2)' }}>
+      <label className="meta">Text Scale</label>
+      <div className="row" style={{ display: 'flex', gap: 'var(--space-2)' }}>
+        {[
+          { key: 'small', label: 'Aa', size: '14px' },
+          { key: 'base', label: 'Aa', size: '18px' },
+          { key: 'large', label: 'Aa', size: '22px' },
+        ].map((s) => (
+          <button
+            key={s.key}
+            className={`btn interactive-node ${fontSize === s.key ? 'glow-border' : ''}`}
+            type="button"
+            aria-selected={fontSize === s.key}
+            onClick={() => setFontSize(s.key)}
+            style={{ 
+              flex: 1, 
+              fontSize: s.size, 
+              fontFamily: 'var(--font-reading)',
+              background: fontSize === s.key ? 'rgba(93,63,211,0.2)' : 'transparent',
+              color: fontSize === s.key ? 'var(--fg-2)' : 'var(--muted)',
+              border: fontSize === s.key ? '1px solid var(--indigo-pulse)' : '1px solid var(--border-soft)'
+            }}
+          >
+            {s.label}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div className="stack" style={{ gap: 'var(--space-2)' }}>
+      <label className="meta">Environment</label>
+      <div className="grid-2" style={{ gap: 'var(--space-2)' }}>
+        {THEMES.map((t) => (
+          <button
+            key={t.key}
+            className={`btn interactive-node ${theme === t.key ? 'glow-border' : ''}`}
+            type="button"
+            aria-pressed={theme === t.key}
+            onClick={() => setTheme(t.key)}
+            style={{
+              background: t.bg,
+              color: t.fg,
+              borderColor: theme === t.key ? t.fg : t.border,
+              fontSize: 'var(--text-xs)',
+              padding: 'var(--space-2)',
+              boxShadow: theme === t.key ? 'var(--shadow-glow)' : 'none',
+            }}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div className="glass-panel stack" style={{ padding: 'var(--space-4)' }}>
+      <div className="row" style={{ gap: 'var(--space-2)', marginBottom: 'var(--space-2)' }}>
+        <LinkIcon size={14} color="var(--amber-glow)" />
+        <h3 className="glow-text-amber" style={{ fontSize: 'var(--text-lg)', margin: 0 }}>Characters & Lore</h3>
+      </div>
+      <p className="meta" style={{ fontSize: '11px', marginBottom: 'var(--space-2)' }}>Mentioned in this chapter:</p>
+      <div className="stack" style={{ gap: 'var(--space-2)' }}>
+        {[
+          { name: 'Mira Vale', type: 'Character' },
+          { name: 'Index room', type: 'Location' },
+          { name: 'Ledger 17', type: 'Artifact' },
+        ].map((item) => (
+          <div key={item.name} className="row-between keep-row" style={{ padding: 'var(--space-2)', background: 'rgba(0,0,0,0.2)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-soft)' }}>
+            <span style={{ fontSize: 'var(--text-sm)', color: 'var(--fg-2)' }}>{item.name}</span>
+            <span className="meta" style={{ fontSize: '10px' }}>{item.type}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </>
+)
 
 export default function ReadingPage() {
   const { id: chapterId } = useParams()
@@ -24,6 +107,7 @@ export default function ReadingPage() {
   const { fontSize, setFontSize } = useReaderStore()
   const { theme, setTheme } = useThemeStore()
   const navigate = useNavigate()
+  const [settingsOpen, setSettingsOpen] = useState(false)
 
   // Compute next/prev chapters
   const publishedChapters = allChapters?.filter(c => c.status === 'published') || []
@@ -100,7 +184,7 @@ export default function ReadingPage() {
               <Disc size={14} style={{ display: 'inline', marginRight: '8px', animation: 'spin 4s linear infinite' }} />
               Currently Reading
             </p>
-            <h1 style={{ fontFamily: 'var(--font-reading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', color: 'var(--fg-2)', lineHeight: 1.1 }}>
+            <h1 style={{ fontFamily: 'var(--font-reading)', fontSize: 'clamp(2rem, 5vw, 4rem)', color: 'var(--fg-2)', lineHeight: 1.1 }}>
               {chapter?.title || 'The Quiet Index'}
             </h1>
             <p className="meta" style={{ marginTop: 'var(--space-4)' }}>
@@ -123,7 +207,7 @@ export default function ReadingPage() {
             )}
           </div>
 
-          <div className="row-between" style={{ marginTop: 'var(--space-12)', paddingTop: 'var(--space-6)', borderTop: '1px solid var(--border-soft)' }}>
+          <div className="row-between keep-row" style={{ marginTop: 'var(--space-12)', paddingTop: 'var(--space-6)', borderTop: '1px solid var(--border-soft)', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
             <button 
               className="btn glass-panel" 
               style={{ color: 'var(--fg-2)' }}
@@ -143,95 +227,48 @@ export default function ReadingPage() {
           </div>
         </article>
 
-        {/* Right rail — display controls */}
+        {/* Right rail — display controls (desktop only) */}
         <aside className="reader-rail reader-controls" aria-label="Display settings">
           <div style={{ position: 'sticky', top: '100px' }} className="stack-lg">
-            
             <div className="glass-panel stack" style={{ padding: 'var(--space-4)', gap: 'var(--space-5)' }}>
-              <div className="row-between">
-                <h3 className="glow-text-indigo" style={{ fontSize: 'var(--text-lg)' }}>Display Parameters</h3>
-                <Settings size={16} color="var(--muted)" />
-              </div>
-
-              <div className="stack" style={{ gap: 'var(--space-2)' }}>
-                <label className="meta">Text Scale</label>
-                <div className="row" style={{ display: 'flex', gap: 'var(--space-2)' }}>
-                  {[
-                    { key: 'small', label: 'Aa', size: '14px' },
-                    { key: 'base', label: 'Aa', size: '18px' },
-                    { key: 'large', label: 'Aa', size: '22px' },
-                  ].map((s) => (
-                    <button
-                      key={s.key}
-                      className={`btn interactive-node ${fontSize === s.key ? 'glow-border' : ''}`}
-                      type="button"
-                      aria-selected={fontSize === s.key}
-                      onClick={() => setFontSize(s.key)}
-                      style={{ 
-                        flex: 1, 
-                        fontSize: s.size, 
-                        fontFamily: 'var(--font-reading)',
-                        background: fontSize === s.key ? 'rgba(93,63,211,0.2)' : 'transparent',
-                        color: fontSize === s.key ? 'var(--fg-2)' : 'var(--muted)',
-                        border: fontSize === s.key ? '1px solid var(--indigo-pulse)' : '1px solid var(--border-soft)'
-                      }}
-                    >
-                      {s.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div className="stack" style={{ gap: 'var(--space-2)' }}>
-                <label className="meta">Environment</label>
-                <div className="grid-2" style={{ gap: 'var(--space-2)' }}>
-                  {THEMES.map((t) => (
-                    <button
-                      key={t.key}
-                      className={`btn interactive-node ${theme === t.key ? 'glow-border' : ''}`}
-                      type="button"
-                      aria-pressed={theme === t.key}
-                      onClick={() => setTheme(t.key)}
-                      style={{
-                        background: t.bg,
-                        color: t.fg,
-                        borderColor: theme === t.key ? t.fg : t.border,
-                        fontSize: 'var(--text-xs)',
-                        padding: 'var(--space-2)',
-                        boxShadow: theme === t.key ? 'var(--shadow-glow)' : 'none',
-                      }}
-                    >
-                      {t.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <DisplaySettingsPanel fontSize={fontSize} setFontSize={setFontSize} theme={theme} setTheme={setTheme} />
             </div>
-
-            {/* Story Intelligence Context */}
-            <div className="glass-panel stack" style={{ padding: 'var(--space-4)' }}>
-              <div className="row" style={{ gap: 'var(--space-2)', marginBottom: 'var(--space-2)' }}>
-                <LinkIcon size={14} color="var(--amber-glow)" />
-                <h3 className="glow-text-amber" style={{ fontSize: 'var(--text-lg)' }}>Characters & Lore</h3>
-              </div>
-              <p className="meta" style={{ fontSize: '11px', marginBottom: 'var(--space-2)' }}>Mentioned in this chapter:</p>
-              <div className="stack" style={{ gap: 'var(--space-2)' }}>
-                {[
-                  { name: 'Mira Vale', type: 'Character' },
-                  { name: 'Index room', type: 'Location' },
-                  { name: 'Ledger 17', type: 'Artifact' },
-                ].map((item) => (
-                  <div key={item.name} className="row-between" style={{ padding: 'var(--space-2)', background: 'rgba(0,0,0,0.2)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-soft)' }}>
-                    <span style={{ fontSize: 'var(--text-sm)', color: 'var(--fg-2)' }}>{item.name}</span>
-                    <span className="meta" style={{ fontSize: '10px' }}>{item.type}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
           </div>
         </aside>
       </div>
+
+      {/* Mobile floating settings button */}
+      <button
+        className="reader-settings-toggle"
+        aria-label="Display settings"
+        onClick={() => setSettingsOpen(true)}
+      >
+        <Settings size={22} />
+      </button>
+
+      {/* Mobile settings bottom sheet */}
+      {settingsOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            style={{ position: 'fixed', inset: 0, zIndex: 48, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)' }}
+            onClick={() => setSettingsOpen(false)}
+          />
+          <div className="reader-settings-sheet is-open" role="dialog" aria-label="Display settings">
+            <div className="row-between keep-row" style={{ borderBottom: '1px solid var(--border-soft)', paddingBottom: 'var(--space-3)', marginBottom: 'var(--space-2)' }}>
+              <span className="meta glow-text-indigo">Display Parameters</span>
+              <button
+                className="btn btn-ghost btn-icon"
+                onClick={() => setSettingsOpen(false)}
+                aria-label="Close settings"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <DisplaySettingsPanel fontSize={fontSize} setFontSize={setFontSize} theme={theme} setTheme={setTheme} />
+          </div>
+        </>
+      )}
     </main>
   )
 }

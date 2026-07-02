@@ -32,7 +32,7 @@ export default function ReaderHomePage() {
 
         <div className="grid-main" style={{ gap: 'var(--space-8)' }}>
           {/* Main column */}
-          <div className="stack-lg">
+          <div className="stack-lg" style={{ minWidth: 0 }}>
 
             {/* Following Library */}
             <div className="stack">
@@ -60,7 +60,7 @@ export default function ReaderHomePage() {
             </div>
           </div>
 
-        {/* Aside */}
+        {/* Aside — appears below main content on mobile */}
         <aside className="stack-lg" style={{ position: 'sticky', top: '80px' }}>
           {/* Recommended Reads */}
           <div className="glass-panel stack" style={{ padding: 'var(--space-4)' }}>
@@ -74,7 +74,7 @@ export default function ReaderHomePage() {
                 <Link key={novel.id} to={`/reader/novel/${novel.id}`} className="interactive-node" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
                   <article className="row" style={{ gap: 'var(--space-3)' }}>
                     <NovelCover title={novel.title} novelId={novel.id} coverUrl={novel.coverUrl} width="48px" height="64px" style={{ fontSize: '8px', boxShadow: '0 0 10px rgba(0,0,0,0.5)' }} />
-                    <div style={{ flex: 1 }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
                       <h4 style={{ fontFamily: 'var(--font-reading)', fontSize: 'var(--text-lg)', color: 'var(--fg-2)', margin: 0, lineHeight: 1.2 }}>{novel.title}</h4>
                       <p className="meta" style={{ marginTop: '4px', fontSize: '11px' }}>Trending in {novel.genre?.[0]}</p>
                     </div>
@@ -89,6 +89,7 @@ export default function ReaderHomePage() {
           </div>
         </aside>
       </div>
+
       </div>
     </section>
   )
